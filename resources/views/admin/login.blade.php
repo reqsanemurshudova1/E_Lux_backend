@@ -36,7 +36,16 @@
         </ul>
     </div>
 @endif
+@if (Session::has('error'))
 
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Warning!</strong> {{Session::get('error')}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+@endif
       <form action="{{url('admin/login')}}" method="post">
         @csrf
         <div class="input-group mb-3">

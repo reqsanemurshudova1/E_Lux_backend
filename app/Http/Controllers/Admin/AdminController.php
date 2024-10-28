@@ -38,7 +38,7 @@ $customMessages = [
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 return redirect('admin/dashboard');
             } else {
-                return redirect()->back()->with('flash_message_error', 'Invalid Username or Password');
+                return redirect()->back()->with('error', 'Invalid Username or Password');
             }
         }
         
