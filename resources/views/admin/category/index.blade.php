@@ -22,7 +22,7 @@
             @foreach($categories as $category)
                 <tr>
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td>{{ $category->category_name }}</td>
                     <td>
                         <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" style="display:inline;">
