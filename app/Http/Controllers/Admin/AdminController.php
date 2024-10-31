@@ -50,4 +50,9 @@ $customMessages = [
         Auth::guard('admin')->logout();
         return redirect('admin/login');
     }
+
+    public function update_password()
+    {
+        return view('admin.update_password');
+    }
 }

@@ -13,16 +13,22 @@
   <link rel="stylesheet" href=" {{url('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{url('admin/dist/css/adminlte.min.css')}}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<!-- jQuery Confirm CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
-@include('admin.layout.header')
+  @include('admin.layout.header')
+  @include('admin.layout.sidebar')
+  <div class="content-wrapper">
+    @yield('content')
+  </div>
+  @include('admin.layout.footer')
+</div>
 
-@include('admin.layout.sidebar')
-
-@yield('content')
 
 
 
@@ -48,6 +54,33 @@
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="dist/js/demo.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.data-table').DataTable();
+  });
+</script>
+<script src="{{ url('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    $('.delete-button').on('click', function() {
+        var form = $(this).closest('.delete-product-form');
+        if (confirm('Are you sure you want to delete this product?')) {
+            form.submit();
+        }
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('.delete-button').on('click', function() {
+        var productId = $(this).data('id');
+        var formAction = "{{ route('admin.delete_product', '') }}/" + productId;
+        $('#deleteForm').attr('action', formAction);
+    });
+});
+</script>
+
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
@@ -57,7 +90,8 @@
 <script src="{{url('admin/plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{url('admin/plugins/chart.js/Chart.min.js')}}"></script>
-
+<!-- jQuery Confirm JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
 <!-- PAGE SCRIPTS -->
 <script src="{{url('admin/dist/js/pages/dashboard2.js')}}"></script>
 </body>

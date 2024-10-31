@@ -46,7 +46,7 @@
   </button>
 </div>
 @endif
-      <form action="{{url('admin/login')}}" method="post">
+      <form action="{{route('admin.login')}}" method="post">
         @csrf
         <div class="input-group mb-3">
           <input name="email" type="email" class="form-control" placeholder="Email">
