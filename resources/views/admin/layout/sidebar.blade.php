@@ -11,10 +11,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="{{ asset(Auth::guard('admin')->user()->image ?? 'dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block">{{ Auth::guard('admin')->user()->name }}</a>
       </div>
     </div>
 
@@ -27,7 +27,7 @@
           <a href="#" class="nav-link active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
-              Setting
+              Settings
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
@@ -35,24 +35,24 @@
             <li class="nav-item">
               <a href="{{ route('admin.update_password') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Update Admin Password</p>
+                <p>Admin Password</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link active">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Update Admin Detail</p>
+                <p> Admin Details</p>
               </a>
             </li>
           </ul>
         </li>
 
-        <!-- Categorious Menu -->
+        <!-- Categories Menu -->
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-folder"></i>
             <p>
-              Categorious
+              Categories
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
@@ -60,13 +60,13 @@
             <li class="nav-item">
               <a href="{{ route('admin.products') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Product</p>
+                <p>Products</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.category.index') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Category</p>
+                <p>Categories</p>
               </a>
             </li>
             <li class="nav-item">
@@ -77,8 +77,6 @@
             </li>
           </ul>
         </li>
-
-        
 
       </ul>
     </nav>

@@ -14,12 +14,14 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
 
-    Route::match(['get', 'post'], 'login', [AdminController::class, 'login'])->name('admin.login');
-
+    Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('/login', [AdminController::class, 'login']);
     Route::middleware([Admin::class])->group(function () {
+    
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
-        Route::get('update-password', [AdminController::class, 'update_password'])->name('admin.update_password');
+        Route::get('/update-password', [AdminController::class, 'update_password'])->name('admin.update_password');
+        Route::post('/update-password', [AdminController::class, 'update_password'])->name('admin.update_password.post');
+        Route::get('admin/update-details', [AdminController::class, 'update_details'])->name('admin.update_details');
         Route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
         //categories
 

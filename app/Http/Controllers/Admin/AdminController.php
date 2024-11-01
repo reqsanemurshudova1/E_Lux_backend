@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
+
 
 
 
@@ -50,9 +54,37 @@ $customMessages = [
         Auth::guard('admin')->logout();
         return redirect('admin/login');
     }
-
-    public function update_password()
-    {
-        return view('admin.update_password');
+ 
+    
+        public function update_password(Request $request)
+        {
+            $admin = Auth::guard('admin')->user();
+    
+        
+            $request->validate([
+                'currentPassword' => 'required',
+                'newPassword' => 'required|min:6|confirmed',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+    
+            if (!Hash::check($request->currentPassword, $admin->password)) {
+                return redirect()->back()->with('error', 'Current password is incorrect.');
+            }
+    
+  
+            $admin->password = Hash::make($request->newPassword);
+    
+            if ($request->hasFile('image')) {
+              
+                if ($admin->image) {
+                    Storage::delete($admin->image);
+                }
+                $admin->image = $request->file('image')->store('photos', 'public');
+            }
+    
+            $admin->save();
+    
+            return redirect()->route('admin.update_password')->with('success', 'Password and photo updated successfully.');
+        }
     }
-}
+    
