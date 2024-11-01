@@ -19,6 +19,7 @@ class ProductSeeder extends Seeder
     {
         $productsRecord=[
             'category_id' => 1,
+            
             'brand_id' => 1,
             'product_name' => 'Sample Product',
             'product_code' => 'SP001',

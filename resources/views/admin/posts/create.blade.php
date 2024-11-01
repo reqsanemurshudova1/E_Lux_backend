@@ -1,26 +1,50 @@
 @extends('admin.layout.layout')
 
 @section('content')
-    <h1>Create Post</h1>
+<div class="container mt-5">
+    <h1 class="display-4">Create Post</h1>
 
-    <form action="{{ route('admin.posts.store') }}" method="POST">
-        @csrf
-        <div>
-            <label>Title:</label>
-            <input type="text" name="title" required>
+    @if(Session::has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('error') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <div>
-            <label>Content:</label>
-            <textarea name="content" required></textarea>
+    @endif
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Create New Post</h5>
         </div>
-        <div>
-            <label>Author:</label>
-            <input type="text" name="author" required>
+
+        <div class="card-body">
+            <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="image">Post Image:</label>
+                    <input type="file" name="image" id="image" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" id="title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea name="content" id="content" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" name="author" id="author" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <input type="text" name="category" id="category" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">Back to Post List</a>
+            </form>
         </div>
-        <div>
-            <label>Category:</label>
-            <input type="text" name="category" required>
-        </div>
-        <button type="submit">Create</button>
-    </form>
+    </div>
+</div>
 @endsection

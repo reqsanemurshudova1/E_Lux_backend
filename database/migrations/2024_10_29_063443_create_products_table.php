@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
 
             $table->integer('brand_id')->nullable(); 
+          
             $table->string('product_name');
             $table->string('product_code');
             $table->string('product_color');
@@ -34,6 +35,7 @@ class CreateProductsTable extends Migration
             $table->string('pattern')->nullable();
             $table->string('sleeve')->nullable();
             $table->string('origin')->nullable();
+          
             $table->string('fit')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_keyword')->nullable();
