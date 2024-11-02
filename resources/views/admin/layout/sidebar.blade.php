@@ -78,7 +78,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.posts.index') }}" class="nav-link {{ request()->routeIs('admin.posts.index') ? 'active' : '' }}">
-                                <i class="fas fa-edit nav-icon"></i> <!-- Posts icon -->
+                                <i class="fas fa-edit nav-icon"></i>
                                 <p>Posts</p>
                             </a>
                         </li>
@@ -93,8 +93,15 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.ourservices.index') }}" class="nav-link {{ request()->routeIs('admin.ourservices.index') ? 'active' : '' }}">
-                        <i class="far fa-folder nav-icon"></i> <!-- Our Services icon -->
+                        <i class="far fa-folder nav-icon"></i>
                         <p>Our Services</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.partners.index') }}" class="nav-link {{ request()->routeIs('admin.partners.index') ? 'active' : '' }}">
+                        <i class="far fa-user nav-icon"></i>
+                        <p>Partners</p>
                     </a>
                 </li>
 

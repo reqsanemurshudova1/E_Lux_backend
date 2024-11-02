@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Admin;
 use App\Http\Controllers\Admin\AdminController;
@@ -8,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\OurServicesController;
+use App\Http\Controllers\Admin\PartnerController;
 
 // Public Routes
 Route::get('/', function () {
@@ -47,7 +47,7 @@ Route::prefix('admin')->group(function () {
         // Products
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductsController::class, 'products'])->name('admin.products');
-            Route::get('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product'); // GET for rendering the form
+            Route::get('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product');
             Route::post('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product.post');
             Route::post('delete-product/{id}', [ProductsController::class, 'delete_product'])->name('admin.delete_product');
         });
@@ -72,12 +72,22 @@ Route::prefix('admin')->group(function () {
             Route::delete('{id}', [ShippingMethodController::class, 'destroy'])->name('admin.shipping.destroy');
         });
 
+        // Partners
+        Route::prefix('partners')->group(function () {
+            Route::get('/', [PartnerController::class, 'index'])->name('admin.partners.index');
+            Route::get('/create', [PartnerController::class, 'create'])->name('admin.partners.create');
+            Route::post('/', [PartnerController::class, 'store'])->name('admin.partners.store');
+            Route::get('/edit/{partner}', [PartnerController::class, 'edit'])->name('admin.partners.edit');
+            Route::put('{partner}', [PartnerController::class, 'update'])->name('admin.partners.update');
+            Route::delete('{partner}', [PartnerController::class, 'destroy'])->name('admin.partners.destroy');
+        });
+
         // Our Services
         Route::prefix('ourservices')->group(function () {
             Route::get('/', [OurServicesController::class, 'index'])->name('admin.ourservices.index');
             Route::get('/create', [OurServicesController::class, 'create'])->name('admin.ourservices.create');
             Route::post('/', [OurServicesController::class, 'store'])->name('admin.ourservices.store');
-            Route::get('{id}/edit', [OurServicesController::class, 'edit'])->name('admin.ourservices.edit');
+            Route::get('/edit/{id}', [OurServicesController::class, 'edit'])->name('admin.ourservices.edit');
             Route::put('{id}', [OurServicesController::class, 'update'])->name('admin.ourservices.update');
             Route::delete('{id}', [OurServicesController::class, 'destroy'])->name('admin.ourservices.destroy');
 
