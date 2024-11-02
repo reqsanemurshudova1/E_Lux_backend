@@ -40,10 +40,10 @@ class ProductsController extends Controller
     public function addEditProduct(Request $request, $id = null)
     {
         $title = $id ? "Edit Product" : "Add Product";
-    
+
         if ($request->isMethod('POST')) {
             $data = $request->all();
-    
+
             $rules = [
                 'category_id' => 'required|exists:categories,id',
                 'product_name' => 'required|regex:/^[a-zA-Z0-9\s]+$/',
@@ -51,9 +51,9 @@ class ProductsController extends Controller
                 'product_price' => 'required|numeric|min:0',
                 'product_color' => 'required|string',
                 'family_color' => 'required|string',
-                'image.*' => 'image|mimes:jpeg,png,jpg,gif', 
+                'image.*' => 'image|mimes:jpeg,png,jpg,gif',
             ];
-    
+
             $customMessages = [
                 'category_id.required' => 'Category name is required',
                 'product_name.required' => 'Product name is required',
@@ -64,18 +64,18 @@ class ProductsController extends Controller
                 'family_color.required' => 'Family color is required',
                 'image.*.image' => 'Uploaded file must be an image',
                 'image.*.mimes' => 'Image must be a type of jpeg, png, jpg, gif',
-               
+
             ];
-    
+
             $validator = Validator::make($data, $rules, $customMessages);
-    
+
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-    
+
             $product = $id ? Product::findOrFail($id) : new Product();
-    
-      
+
+
             $product->category_id = $data['category_id'];
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
@@ -94,19 +94,22 @@ class ProductsController extends Controller
             $product->meta_title = $data['meta_title'] ?? null;
             $product->meta_keyword = $data['meta_keyword'] ?? null;
             $product->meta_description = $data['meta_description'] ?? null;
-    
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('uploads', 'public');
-                $product->image = $imagePath;
+
+            if ($request->hasFile('images')) {
+                // $imagePath = $request->file('images')->store('uploads', 'public');
+                // $product->image = $imagePath;
+                foreach ($request->file('images') as $file) {
+                    $filePath = $file->store('photos', 'public');
+                    $product->image = $filePath;
+                }
             }
             $product->save();
-    
+
             $message = $id ? 'Product updated successfully' : 'Product added successfully';
             return redirect()->route('admin.products')->with('flash_message_success', $message);
         }
-    
+
         $categories = Category::all();
         return view('admin.products.add_edit_product', compact('title', 'categories', 'id'));
     }
-    
 }
