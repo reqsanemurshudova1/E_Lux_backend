@@ -5,6 +5,7 @@ use App\Http\Middleware\Admin;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\PostController;
 
 
@@ -49,7 +50,13 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
     
-   
+   //shipping
+   Route::get('shipping-methods', [ShippingMethodController::class, 'index'])->name('admin.shipping.index');
+   Route::get('shipping-methods/create', [ShippingMethodController::class, 'create'])->name('admin.shipping.create');
+   Route::post('shipping-methods', [ShippingMethodController::class, 'store'])->name('admin.shipping.store');
+   Route::get('shipping-methods/{id}/edit', [ShippingMethodController::class, 'edit'])->name('admin.shipping.edit');
+   Route::put('shipping-methods/{id}', [ShippingMethodController::class, 'update'])->name('admin.shipping.update');
+   Route::delete('shipping-methods/{id}', [ShippingMethodController::class, 'destroy'])->name('admin.shipping.destroy');
 });
 
 });
