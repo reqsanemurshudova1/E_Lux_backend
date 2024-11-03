@@ -123,4 +123,17 @@ class OurServicesController extends Controller
 
         return redirect()->route('admin.ourservices.index')->with('success', 'Service item deleted successfully.');
     }
+
+    //    Public Api
+
+    public function getOurServices()
+    {
+        $ourServicesItem = OurserviceItem::all();
+        $ourServices = Ourservice::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => $ourServicesItem,
+            'ourServices' => $ourServices,
+        ], 200);
+    }
 }
