@@ -1,15 +1,16 @@
 <?php
-use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\Admin;
+
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ShippingMethodController;
-use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\OurServicesController;
 use App\Http\Controllers\Admin\PartnerController;
-use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\PaymentMethodsController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\ShippingMethodController;
+use App\Http\Middleware\Admin;
+use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', function () {
