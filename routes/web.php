@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\OurServicesController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\HomeBannerController;
 
 // Public Routes
 Route::get('/', function () {
@@ -80,6 +81,16 @@ Route::prefix('admin')->group(function () {
             Route::get('/edit/{partner}', [PartnerController::class, 'edit'])->name('admin.partners.edit');
             Route::put('{partner}', [PartnerController::class, 'update'])->name('admin.partners.update');
             Route::delete('{partner}', [PartnerController::class, 'destroy'])->name('admin.partners.destroy');
+        });
+
+        //Home Banners
+        Route::prefix('home_banners')->group(function () {
+            Route::get('/', [HomeBannerController::class, 'index'])->name('admin.home_banners.index'); // Listele
+            Route::get('/create', [HomeBannerController::class, 'create'])->name('admin.home_banners.create'); // Yeni Ekle
+            Route::post('/', [HomeBannerController::class, 'store'])->name('admin.home_banners.store'); // Yeni Ekleme İşlemi
+            Route::get('edit/{id}', [HomeBannerController::class, 'edit'])->name('admin.home_banners.edit'); // Düzenle
+            Route::put('{id}', [HomeBannerController::class, 'update'])->name('admin.home_banners.update'); // Güncelleme İşlemi
+            Route::delete('{id}', [HomeBannerController::class, 'destroy'])->name('admin.home_banners.destroy'); // Silme İşlemi
         });
 
         // Our Services

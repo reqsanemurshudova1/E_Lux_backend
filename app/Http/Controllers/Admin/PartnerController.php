@@ -79,9 +79,13 @@ class PartnerController extends Controller
 
 //    Public Api
 
+
     public function getPartners()
     {
         $partners = Partner::all();
-        return response()->json($partners);
+        return response()->json([
+            'status' => 'success',
+            'data' => $partners
+        ], 200);
     }
 }

@@ -23,6 +23,12 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.home_banners.index') }}" class="nav-link {{ request()->routeIs('admin.home_banners.index') ? 'active' : '' }}">
+                        <i class="fas fa-th-list nav-icon"></i>
+                        <p>Home Banner</p>
+                    </a>
+                </li>
                 <!-- Settings Menu -->
                 <li class="nav-item has-treeview {{ request()->routeIs('admin.update_password') || request()->routeIs('admin.details') || request()->routeIs('admin.edit_profile') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->routeIs('admin.update_password') || request()->routeIs('admin.details') || request()->routeIs('admin.edit_profile') ? 'active' : '' }}">
