@@ -110,6 +110,12 @@
                         <p>Partners</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.payment_methods.index') }}" class="nav-link {{ request()->routeIs('admin.payment_methods.index') ? 'active' : '' }}">
+                        <i class="far fa-folder nav-icon"></i>
+                        <p>Payment Methods</p>
+                    </a>
+                </li>
 
             </ul>
         </nav>

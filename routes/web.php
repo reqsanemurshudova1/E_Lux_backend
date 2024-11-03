@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\OurServicesController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\HomeBannerController;
+use App\Http\Controllers\Admin\PaymentMethodsController;
 
 // Public Routes
 Route::get('/', function () {
@@ -85,12 +86,22 @@ Route::prefix('admin')->group(function () {
 
         //Home Banners
         Route::prefix('home_banners')->group(function () {
-            Route::get('/', [HomeBannerController::class, 'index'])->name('admin.home_banners.index'); // Listele
-            Route::get('/create', [HomeBannerController::class, 'create'])->name('admin.home_banners.create'); // Yeni Ekle
-            Route::post('/', [HomeBannerController::class, 'store'])->name('admin.home_banners.store'); // Yeni Ekleme İşlemi
-            Route::get('edit/{id}', [HomeBannerController::class, 'edit'])->name('admin.home_banners.edit'); // Düzenle
-            Route::put('{id}', [HomeBannerController::class, 'update'])->name('admin.home_banners.update'); // Güncelleme İşlemi
-            Route::delete('{id}', [HomeBannerController::class, 'destroy'])->name('admin.home_banners.destroy'); // Silme İşlemi
+            Route::get('/', [HomeBannerController::class, 'index'])->name('admin.home_banners.index');
+            Route::get('/create', [HomeBannerController::class, 'create'])->name('admin.home_banners.create');
+            Route::post('/', [HomeBannerController::class, 'store'])->name('admin.home_banners.store');
+            Route::get('edit/{id}', [HomeBannerController::class, 'edit'])->name('admin.home_banners.edit');
+            Route::put('{id}', [HomeBannerController::class, 'update'])->name('admin.home_banners.update');
+            Route::delete('{id}', [HomeBannerController::class, 'destroy'])->name('admin.home_banners.destroy');
+        });
+
+        //Payment Methods
+        Route::prefix('payment_methods')->group(function () {
+            Route::get('/', [PaymentMethodsController::class, 'index'])->name('admin.payment_methods.index');
+            Route::get('/create', [PaymentMethodsController::class, 'create'])->name('admin.payment_methods.create');
+            Route::post('/', [PaymentMethodsController::class, 'store'])->name('admin.payment_methods.store');
+            Route::get('edit/{id}', [PaymentMethodsController::class, 'edit'])->name('admin.payment_methods.edit');
+            Route::put('{id}', [PaymentMethodsController::class, 'update'])->name('admin.payment_methods.update');
+            Route::delete('{id}', [PaymentMethodsController::class, 'destroy'])->name('admin.payment_methods.destroy');
         });
 
         // Our Services
