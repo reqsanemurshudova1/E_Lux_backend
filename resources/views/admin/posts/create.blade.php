@@ -30,6 +30,20 @@
                     <input type="text" name="title" id="title" class="form-control" required>
                 </div>
                 <div class="form-group">
+    <label for="seller">Seller:</label>
+    <input type="text" name="seller" id="seller" class="form-control" required>
+</div>
+
+<div class="form-group">
+    <label for="author_image">Author Image:</label>
+    <input type="file" name="author_image" id="author_image" class="form-control">
+</div>
+<div class="form-group">
+    <label for="author_bio">Author Bio:</label>
+    <textarea name="author_bio" id="author_bio" class="form-control" required></textarea>
+</div>
+
+                <div class="form-group">
                     <label for="content">Content:</label>
                     <textarea name="content" id="content" class="form-control" required></textarea>
                 </div>

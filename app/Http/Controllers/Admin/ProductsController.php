@@ -112,4 +112,11 @@ class ProductsController extends Controller
         $categories = Category::all();
         return view('admin.products.add_edit_product', compact('title', 'categories', 'id'));
     }
+    public function getProducts()
+    {
+        $products = Product::with('category')->get();
+        return response()->json(['products' => $products]);
+    }
+
+
 }
