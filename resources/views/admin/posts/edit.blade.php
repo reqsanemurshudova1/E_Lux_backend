@@ -35,6 +35,20 @@
                     <label for="image">Post Image:</label>
                     <input type="file" name="image" id="image" class="form-control">
                 </div>
+                <div class="form-group">
+    <label for="seller">Seller:</label>
+    <input type="text" name="seller" id="seller" class="form-control" required>
+</div>
+
+<div class="form-group">
+    <label for="author_image">Author Image:</label>
+    <input type="file" name="author_image" id="author_image" class="form-control">
+</div>
+<div class="form-group">
+    <label for="author_bio">Author Bio:</label>
+    <textarea name="author_bio" id="author_bio" class="form-control" required></textarea>
+</div>
+
 
                 <div class="form-group">
                     <label for="title">Title:</label>
