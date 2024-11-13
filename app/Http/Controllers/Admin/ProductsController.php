@@ -117,6 +117,9 @@ class ProductsController extends Controller
         $products = Product::with('category')->get();
         return response()->json(['products' => $products]);
     }
+   
+
+   
 
 
 }

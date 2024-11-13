@@ -21,6 +21,8 @@ Route::middleware('api')->group(function () {
     Route::get('/payment-methods', [PaymentMethodsController::class, 'getPaymentMethods']);
     Route::get('/our-services', [OurServicesController::class, 'getOurServices']);
     Route::get('/products', [ProductsController::class, 'getProducts']);
+ 
+
     Route::get('/posts', [PostController::class, 'getPosts']);
     
     
