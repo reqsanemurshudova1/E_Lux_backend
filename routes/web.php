@@ -9,8 +9,10 @@ use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ShippingMethodController;
+use App\Http\Controllers\Admin\ProductsDescriptionController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductReviewController;
 
 // Public Routes
 Route::get('/', function () {
@@ -51,10 +53,9 @@ Route::prefix('admin')->group(function () {
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductsController::class, 'products'])->name('admin.products');
             Route::get('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product');
-
             Route::post('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product.post');
             Route::post('delete-product/{id}', [ProductsController::class, 'delete_product'])->name('admin.delete_product');
-         
+
         });
 
         // Posts
@@ -125,5 +126,25 @@ Route::prefix('admin')->group(function () {
                 Route::delete('{id}', [OurServicesController::class, 'destroyItem'])->name('admin.ourservices.items.destroy');
             });
         });
+        // Product Descriptions
+        Route::prefix('products_description')->group(function () {
+            Route::get('/', [ProductsDescriptionController::class, 'index'])->name('admin.products_description.index');
+            Route::get('/create', [ProductsDescriptionController::class, 'create'])->name('admin.products_description.create');
+            Route::post('/', [ProductsDescriptionController::class, 'store'])->name('admin.products_description.store');
+            Route::get('/edit/{id}', [ProductsDescriptionController::class, 'edit'])->name('admin.products_description.edit');
+            Route::put('/{id}', [ProductsDescriptionController::class, 'update'])->name('admin.products_description.update');
+            Route::delete('/{id}', [ProductsDescriptionController::class, 'destroy'])->name('admin.products_description.destroy');
+        });
+
+        // Product Reviews
+        Route::prefix('product_reviews')->group(function () {
+            Route::get('/', [ProductReviewController::class, 'index'])->name('admin.product_reviews.index');
+            Route::get('/create', [ProductReviewController::class, 'create'])->name('admin.product_reviews.create');
+            Route::post('/', [ProductReviewController::class, 'store'])->name('admin.product_reviews.store');
+            Route::get('/edit/{id}', [ProductReviewController::class, 'edit'])->name('admin.product_reviews.edit');
+            Route::put('/{id}', [ProductReviewController::class, 'update'])->name('admin.product_reviews.update');
+            Route::delete('/{id}', [ProductReviewController::class, 'destroy'])->name('admin.product_reviews.destroy');
+        });
+
     });
 });
