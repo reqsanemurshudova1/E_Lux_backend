@@ -29,7 +29,7 @@
                         <p>Home Banner</p>
                     </a>
                 </li>
-                
+
                 <!-- Settings Menu -->
                 <li class="nav-item has-treeview {{ request()->routeIs('admin.update_password') || request()->routeIs('admin.details') || request()->routeIs('admin.edit_profile') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->routeIs('admin.update_password') || request()->routeIs('admin.details') || request()->routeIs('admin.edit_profile') ? 'active' : '' }}">
@@ -60,13 +60,35 @@
                         </li>
                     </ul>
                 </li>
-
-                <!-- Products Menu Item -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.products') }}" class="nav-link {{ request()->routeIs('admin.products') ? 'active' : '' }}">
+                <!-- Products Menu -->
+                <li class="nav-item has-treeview {{ request()->routeIs('admin.products') || request()->routeIs('admin.products_description.index') || request()->routeIs('admin.products') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('admin.products') || request()->routeIs('admin.products') || request()->routeIs('admin.products') ? 'active' : '' }}">
                         <i class="fas fa-box nav-icon"></i>
-                        <p>Products</p>
+                        <p>
+                            Product
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products') }}" class="nav-link {{ request()->routeIs('admin.products') ? 'active' : '' }}">
+                                <i class="fas fa-th-list nav-icon"></i>
+                                <p>Products</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products_description.index') }}" class="nav-link {{ request()->routeIs('admin.products_description.index') ? 'active' : '' }}">
+                                <i class="fas fa-info-circle nav-icon"></i>
+                                <p>Details</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.edit_profile') }}" class="nav-link {{ request()->routeIs('admin.edit_profile') ? 'active' : '' }}">
+                                <i class="far fa-user nav-icon"></i>
+                                <p>Reviews</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <!-- Product Categories Menu Item -->
