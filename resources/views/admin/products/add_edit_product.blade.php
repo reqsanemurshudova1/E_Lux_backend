@@ -63,6 +63,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+    <label for="in_stock">Stokda var</label>
+    <select name="in_stock" id="in_stock" class="form-control">
+        <option value="1" {{ old('in_stock', $product->in_stock ?? 1) == 1 ? 'selected' : '' }}>Bəli</option>
+        <option value="0" {{ old('in_stock', $product->in_stock ?? 1) == 0 ? 'selected' : '' }}>Xeyr</option>
+    </select>
+</div>
 
                 <div class="form-group">
                     <label for="category_id">Category</label>
@@ -121,6 +128,11 @@
         @endforeach
     </select>
 </div>
+<div class="form-group">
+    <label for="quantity">Product Quantity</label>
+    <input type="number" name="quantity" id="quantity" class="form-control" value="{{ old('quantity', $product->quantity ?? 0) }}" min="0" required>
+</div>
+
 
 </div>
 
