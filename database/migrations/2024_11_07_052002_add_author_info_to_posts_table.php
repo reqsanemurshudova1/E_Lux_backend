@@ -24,7 +24,7 @@ class AddAuthorInfoToPostsTable extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn(['author_name', 'author_image', 'author_bio']);
+            $table->dropColumn([ 'author_image', 'author_bio']);
         });
     }
 }

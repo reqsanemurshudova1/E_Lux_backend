@@ -34,12 +34,15 @@ class CreateProductsTable extends Migration
             $table->string('fabric')->nullable();
             $table->string('pattern')->nullable();
             $table->string('sleeve')->nullable();
-            $table->string('origin')->nullable();
-          
+            $table->string('origin')->nullable();        
             $table->string('fit')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_keyword')->nullable();
             $table->text('meta_description')->nullable();
+            $table->boolean('in_stock')->default(1); // 1 - Stokda var, 0 - Stokda yoxdur
+            $table->integer('quantity')->default(0); // Default olaraq 0
+
+
             $table->enum('is_feature', ['Yes', 'No'])->default('No'); 
             $table->tinyInteger('status')->default(1); 
 

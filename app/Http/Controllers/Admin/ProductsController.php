@@ -94,6 +94,10 @@ class ProductsController extends Controller
             $product->meta_title = $data['meta_title'] ?? null;
             $product->meta_keyword = $data['meta_keyword'] ?? null;
             $product->meta_description = $data['meta_description'] ?? null;
+            $product->in_stock = $data['in_stock'] ?? 1;
+            $product->quantity = $data['quantity'] ?? 0;
+
+
 
             if ($request->hasFile('images')) {
                 // $imagePath = $request->file('images')->store('uploads', 'public');

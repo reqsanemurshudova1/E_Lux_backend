@@ -107,6 +107,12 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.cart.index') }}" class="nav-link {{ request()->routeIs('admin.cart.index') ? 'active' : '' }}">
+                        <i class="fas fa-shopping-cart nav-icon"></i>
+                        <p>Cart</p>
+                    </a>
+                </li>
                 <!-- Shipping Methods Menu Item -->
                 <li class="nav-item">
                     <a href="{{ route('admin.shipping.index') }}" class="nav-link {{ request()->routeIs('admin.shipping.index') ? 'active' : '' }}">
@@ -120,6 +126,12 @@
                     <a href="{{ route('admin.ourservices.index') }}" class="nav-link {{ request()->routeIs('admin.ourservices.index') ? 'active' : '' }}">
                         <i class="far fa-folder nav-icon"></i>
                         <p>Our Services</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
+                        <i class="far fa-folder nav-icon"></i>
+                        <p>User Management</p>
                     </a>
                 </li>
 

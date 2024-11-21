@@ -9,15 +9,21 @@ use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ShippingMethodController;
+use App\Http\Controllers\Admin\UserController;
+
+use App\Http\Controllers\Admin\BasketController;
+
 use App\Http\Controllers\Admin\ProductsDescriptionController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductReviewController;
 
+
 // Public Routes
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
@@ -145,6 +151,12 @@ Route::prefix('admin')->group(function () {
             Route::put('/{id}', [ProductReviewController::class, 'update'])->name('admin.product_reviews.update');
             Route::delete('/{id}', [ProductReviewController::class, 'destroy'])->name('admin.product_reviews.destroy');
         });
-
+        //Cart
+        Route::group(['prefix' => 'cart', 'as' => 'admin.cart.'], function () {
+            Route::get('/cart', [BasketController::class, 'index'])->name('index');
+            Route::post('/store', [BasketController::class, 'store'])->name('store');
+            Route::post('/remove', [BasketController::class, 'remove'])->name('remove');
+        });
+        Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     });
 });

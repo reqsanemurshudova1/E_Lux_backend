@@ -11,7 +11,7 @@ class Product extends Model
         'family_color', 'product_size', 'group_code', 'product_price', 'product_discount',
         'free_shipping', 'free_changes_return',
         'description', 'wash_care', 'fabric', 'pattern',
-       'meta_title', 'meta_keyword', 'meta_description',
+       'meta_title', 'meta_keyword', 'meta_description','in_stock','quantity'
     ];
 
 
@@ -24,5 +24,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductsDescription::class);
     }
-
+    public function basketProducts()
+    {
+        return $this->hasMany(BasketProduct::class);
+    }
+    
 }
