@@ -17,6 +17,7 @@ class BasketController extends Controller
         $user = auth()->user();
 
         if (!$user) {
+            
             // bu web üçwn bir validasyad;r ama bizə api lazımdır
             // yəni kiii
             return response()->json(['error' => 'Please log in.'], 401);
