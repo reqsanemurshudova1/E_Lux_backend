@@ -11,22 +11,28 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductReviewController extends Controller
 {
-
     public function index()
     {
         $reviews = ProductReview::all();
-        return view('admin.product_reviews.index', compact('reviews'));
+        return response()->json([
+            'success' => true,
+            'message' => 'All reviews retrieved successfully.',
+            'data' => $reviews,
+        ], 200);
     }
-
-  public function create()
+    
+    public function create()
     {
         $products = Product::all();
-        return view('admin.product_reviews.create', compact('products'));
+    
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ], 200);
     }
-
+    
     public function store(Request $request)
     {
-        // Fotoğrafın doğrulama kuralları ekleniyor
         $validated = $request->validate([
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'profile_name' => 'required|string',
@@ -37,20 +43,21 @@ class ProductReviewController extends Controller
             'common_review' => 'nullable|integer',
             'product_id' => 'required|exists:products,id',
         ]);
-
-        // Fotoğraf var mı diye kontrol et
+    
         if ($request->hasFile('profile_photo')) {
-            // Fotoğrafı kaydet
             $path = $request->file('profile_photo')->store('profile_photos', 'public');
-            $validated['profile_photo'] = $path; // Yolu kaydediyoruz
+            $validated['profile_photo'] = $path;
         }
-
-        // Yeni inceleme kaydedilir
-        ProductReview::create($validated);
-
-        return redirect()->route('admin.product_reviews.index')->with('success', 'Review created successfully.');
+    
+        $review = ProductReview::create($validated);
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Review created successfully.',
+            'data' => $review,
+        ], 201);
     }
-
+    
     public function edit($id)
     {
         $review = ProductReview::findOrFail($id);
@@ -71,26 +78,40 @@ class ProductReviewController extends Controller
             'common_review' => 'nullable|integer',
             'product_id' => 'required|exists:products,id',
         ]);
-
+    
         $review = ProductReview::findOrFail($id);
-
-     if ($request->hasFile('profile_photo')) {
+    
+        if ($request->hasFile('profile_photo')) {
             if ($review->profile_photo) {
                 Storage::disk('public')->delete($review->profile_photo);
             }
             $path = $request->file('profile_photo')->store('profile_photos', 'public');
             $validated['profile_photo'] = $path;
         }
-
+    
         $review->update($validated);
-
-        return redirect()->route('admin.product_reviews.index')->with('success', 'Review updated successfully.');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Review updated successfully.',
+            'data' => $review,
+        ], 200);
     }
-
+    
     public function destroy($id)
     {
-  $review = ProductReview::findOrFail($id);
+        $review = ProductReview::findOrFail($id);
+    
+        if ($review->profile_photo) {
+            Storage::disk('public')->delete($review->profile_photo);
+        }
+    
         $review->delete();
-        return redirect()->route('admin.product_reviews.index')->with('success', 'Review deleted successfully.');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Review deleted successfully.',
+        ], 200);
     }
+    
 }

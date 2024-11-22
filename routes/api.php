@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\Api\ProductReviewController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\BasketController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ShippingAddressController;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -56,5 +58,7 @@ Route::middleware('api')->group(function () {
         Route::get('/orders', [OrderController::class, 'index']);
         Route::post('/orders', [OrderController::class, 'store']); 
     });
+    Route::post('/shipping-address', [ShippingAddressController::class, 'store']);
+    Route::post('/process-payment', [PaymentController::class, 'processPayment']);
     
 });
