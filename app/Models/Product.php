@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductsDescription;
+
 
 class Product extends Model
 {
@@ -28,5 +30,15 @@ class Product extends Model
     {
         return $this->hasMany(BasketProduct::class);
     }
+    public function description()
+{
+    return $this->hasOne(ProductsDescription::class, 'product_id');
+}
+public function reviews()
+{
+    return $this->hasMany(ProductReview::class);
+}
+
+
     
 }

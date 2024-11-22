@@ -10,12 +10,12 @@ class ShippingMethodController extends Controller
     public function index()
     {
         $shippingMethods = ShippingMethod::all();
-        return view('admin.shipping.index', compact('shippingMethods')); // index view
+        return view('admin.shipping.index', compact('shippingMethods')); 
     }
 
     public function create()
     {
-        return view('admin.shipping.create'); // create view
+        return view('admin.shipping.create'); 
     }
 
     public function store(Request $request)
@@ -61,7 +61,7 @@ class ShippingMethodController extends Controller
         $shippingMethod = ShippingMethod::findOrFail($id);
         $shippingMethod->update($request->all());
 
-        // Redirect with correct route name
+       
         return redirect()->route('admin.shipping.index')->with('success', 'Shipping method updated successfully.');
     }
 
