@@ -11,7 +11,7 @@
                 </button>
             </div>
         <?php endif; ?>
-        
+
         <?php if(Session::has('flash_message_success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong><?php echo e(session('flash_message_success')); ?></strong>
@@ -49,7 +49,15 @@
                             <td><?php echo e($product['id']); ?></td>
                             <td><?php echo e($product['product_name']); ?></td>
                             <td><?php echo e($product['product_code']); ?></td>
-                            <td><?php echo e($product['product_color']); ?></td>
+                            <td>
+                                <?php if(is_array($product['product_color'])): ?>
+                                    <?php $__currentLoopData = $product['product_color']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <span class="badge" style="background-color: <?php echo e($color); ?>; color: white;"><?php echo e(ucfirst($color)); ?></span>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php else: ?>
+                                    <span class="badge badge-secondary">No Colors</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <?php if(!empty($product['image'])): ?>
                                 <img src="<?php echo e(asset('storage/' . $product['image'])); ?>" class="img-thumbnail" style="width:60px;">
@@ -88,11 +96,18 @@
                                     <div class="modal-body">
                                         <p><strong>Product ID:</strong> <?php echo e($product['id']); ?></p>
                                         <p><strong>Product Code:</strong> <?php echo e($product['product_code']); ?></p>
-                                        <p><strong>Product Color:</strong> <?php echo e($product['product_color']); ?></p>
+                                        <p>
+                                            <?php if(is_array($product['product_color'])): ?>
+                                                <?php $__currentLoopData = $product['product_color']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <span class="badge" style="background-color: <?php echo e($color); ?>; color: white;"><?php echo e(ucfirst($color)); ?></span>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php else: ?>
+                                                <span class="badge badge-secondary">No Colors</span>
+                                            <?php endif; ?>
+                                        </p>
                                         <p><strong>Price:</strong> <?php echo e($product['product_price']); ?></p>
-                                        
 
-                        
+
                                         <p><strong>Fabric:</strong> <?php echo e($product['fabric']); ?></p>
                                         <p><strong>Description:</strong> <?php echo e($product['description']); ?></p>
                                     </div>

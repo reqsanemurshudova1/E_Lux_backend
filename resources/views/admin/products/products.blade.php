@@ -13,7 +13,7 @@
                 </button>
             </div>
         @endif
-        
+
         @if(Session::has('flash_message_success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{{ session('flash_message_success') }}</strong>
@@ -51,7 +51,15 @@
                             <td>{{ $product['id'] }}</td>
                             <td>{{ $product['product_name'] }}</td>
                             <td>{{ $product['product_code'] }}</td>
-                            <td>{{ $product['product_color'] }}</td>
+                            <td>
+                                @if(is_array($product['product_color']))
+                                    @foreach($product['product_color'] as $color)
+                                        <span class="badge" style="background-color: {{ $color }}; color: white;">{{ ucfirst($color) }}</span>
+                                    @endforeach
+                                @else
+                                    <span class="badge badge-secondary">No Colors</span>
+                                @endif
+                            </td>
                             <td>
                                 @if(!empty($product['image']))
                                 <img src="{{ asset('storage/' . $product['image']) }}" class="img-thumbnail" style="width:60px;">
@@ -89,11 +97,18 @@
                                     <div class="modal-body">
                                         <p><strong>Product ID:</strong> {{ $product['id'] }}</p>
                                         <p><strong>Product Code:</strong> {{ $product['product_code'] }}</p>
-                                        <p><strong>Product Color:</strong> {{ $product['product_color'] }}</p>
+                                        <p>
+                                            @if(is_array($product['product_color']))
+                                                @foreach($product['product_color'] as $color)
+                                                    <span class="badge" style="background-color: {{ $color }}; color: white;">{{ ucfirst($color) }}</span>
+                                                @endforeach
+                                            @else
+                                                <span class="badge badge-secondary">No Colors</span>
+                                            @endif
+                                        </p>
                                         <p><strong>Price:</strong> {{ $product['product_price'] }}</p>
-                                        
 
-                        
+
                                         <p><strong>Fabric:</strong> {{ $product['fabric'] }}</p>
                                         <p><strong>Description:</strong> {{ $product['description'] }}</p>
                                     </div>
