@@ -126,6 +126,11 @@
                     <input type="number" name="product_discount" id="discount" class="form-control" step="0.01" value="{{ old('product_discount', $product->product_discount ?? '') }}">
                 </div>
 
+                
+                <div class="form-group">
+                    <label for="discount">Product quantity</label>
+                    <input type="number" name="quantity" id="discount" class="form-control" step="0.01" value="{{ old('quantity', $product->quantity ?? '') }}">
+                </div>
                 <div class="form-group">
                     <label>Free Shipping</label>
                     <div class="form-check">

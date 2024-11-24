@@ -46,9 +46,7 @@ Route::middleware('api')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
     });
     //cart
-    // deməli bir nüansı diqqətinizə çatdırım)
-    // nə vaxt ki middleware olaraq sanctumu yazmısızsa yəni bunu ('auth:sanctum) bu api həmişə sizdən istifadəçinin access tokenini istəyəcək, yəni bunu "4|89pRiaSA5KtINeNaaqnnDSPIW8QylOTJwAz1crq749e42e6d əgər bunu göndərməsəz və ya göndərdiyiniz tokenin vaxtı bitmiş olsa o api error qaytaracak çünkü bu apilar ancaq giriş etmiş userlərin işlədə biləcəyi xüsusiyyətləri işə salır. burası aydın oldumu?aha bes bunu istifade etmeli deyilem cartda yeni user daxil olmalidirki sebete gire bilsin. İzah edirəm indi))
-    // bəli etməlisiz ama bu fetchlərətokenidə əlavə etməlisiz o zaman beləə
+   
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/cart', [BasketController::class, 'index']);
         Route::post('/cart/store', [BasketController::class, 'store']);

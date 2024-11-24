@@ -62,6 +62,7 @@
                                     <span class="badge badge-secondary">No Colors</span>
                                 @endif
                             </td>
+                            <td>{{ $product['quantity'] }}</td>
                             <td>
                                 @if(!empty($product['image']))
                                 <img src="{{ asset('storage/' . $product['image']) }}" class="img-thumbnail" style="width:60px;">

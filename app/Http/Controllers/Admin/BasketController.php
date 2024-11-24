@@ -18,10 +18,8 @@ class BasketController extends Controller
 
         if (!$user) {
             
-            // bu web üçwn bir validasyad;r ama bizə api lazımdır
-            // yəni kiii
             return response()->json(['error' => 'Please log in.'], 401);
-            //return redirect()->route('login')->with('error', 'Lütfen giriş yapın.');
+           
         }
 
         if (!$user->basket) {
@@ -33,7 +31,7 @@ class BasketController extends Controller
         $basketItems = BasketProduct::where('basket_id', $basketId)->with('product')->get();
 
         $totalPrice = $basketItems->sum(function ($item) {
-            // bura məncə doğru məntiqdə deyil stoka yox quantityə vurlmalıdı
+          
             return $item->product->product_price * $item->stock_count;
         });
 
@@ -41,8 +39,7 @@ class BasketController extends Controller
             'basketItems' => $basketItems,
             'totalPrice' => $totalPrice,
         ]);
-        //bu apidir view nədir? skdjhksf
-        // return view('admin.cart.index', compact('basketItems', 'totalPrice'));
+      
     }
 
 
@@ -55,12 +52,12 @@ class BasketController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
         if (!$user) {
             return response()->json(['error' => 'Please log in.'], 401);
-            // return redirect()->route('login')->with('error', 'Lütfen giriş yapın.');
+        
         }
 
         if (!$user->basket) {
@@ -82,8 +79,8 @@ class BasketController extends Controller
                     $basketItem->stock_count = 1;
                     $basketItem->save();
                 } else {
-                    if ($basket->stock_count + 1 > $product->stock_count) {
-                        return response()->json(['error' => 'Product is out of stock'], 401);
+                    if ($basket->stock_count + 1 > $product->quantity) {
+                        return response()->json(['error' => 'Product is out of stock'], 400);
                     }
 
                     $basket->stock_count += 1;
@@ -92,10 +89,10 @@ class BasketController extends Controller
 
                 return response()->json(['message' => 'Product added to cart']);
             } else {
-                return response()->json(['error' => 'Product is out of stock'], 401);
+                return response()->json(['error' => 'Product is out of stock'], 400);
             }
         } else {
-            return response()->json(['error' => 'Product not found'], 401);
+            return response()->json(['error' => 'Product not found'], 404);
         }
     }
 
