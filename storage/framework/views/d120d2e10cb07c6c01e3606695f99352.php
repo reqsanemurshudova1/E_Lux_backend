@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\e_lux\resources\views\welcome.blade.php ENDPATH**/ ?>
