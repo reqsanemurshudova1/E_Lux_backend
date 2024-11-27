@@ -49,8 +49,9 @@ class ProductsController extends Controller
                 'product_name' => 'required|regex:/^[a-zA-Z0-9\s]+$/',
                 'product_code' => 'required|alpha_num',
                 'product_price' => 'required|numeric|min:0',
-                'product_color' => 'required|string',
                 'family_color' => 'required|string',
+                'product_color' => 'required|array',
+                'product_size' => 'required|array',
                 'image.*' => 'image|mimes:jpeg,png,jpg,gif',
             ];
 
@@ -60,9 +61,10 @@ class ProductsController extends Controller
                 'product_name.regex' => 'Valid name is required',
                 'product_code.required' => 'Product code is required',
                 'product_price.required' => 'Product price is required',
-                'product_color.required' => 'Product color is required',
                 'family_color.required' => 'Family color is required',
                 'image.*.image' => 'Uploaded file must be an image',
+                'product_color.required' => 'Please select at least one color.',
+                'product_size.required' => 'Please select at least one size.',
                 'image.*.mimes' => 'Image must be a type of jpeg, png, jpg, gif',
 
             ];
@@ -79,10 +81,10 @@ class ProductsController extends Controller
             $product->category_id = $data['category_id'];
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
-            $product->product_color = $data['product_color'];
             $product->family_color = $data['family_color'];
-            $product->product_size = $data['product_size'] ?? null;
             $product->group_code = $data['group_code'] ?? null;
+            $product->product_color = $data['product_color'];
+            $product->product_size = $data['product_size'];
             $product->product_price = $data['product_price'];
             $product->product_discount = $data['product_discount'] ?? 0;
             $product->free_shipping = $request->has('free_shipping') ? 1 : 0;
@@ -94,6 +96,10 @@ class ProductsController extends Controller
             $product->meta_title = $data['meta_title'] ?? null;
             $product->meta_keyword = $data['meta_keyword'] ?? null;
             $product->meta_description = $data['meta_description'] ?? null;
+            $product->in_stock = $data['in_stock'] ?? 1;
+            $product->quantity = $data['quantity'] ?? 0;
+
+
 
             if ($request->hasFile('images')) {
                 // $imagePath = $request->file('images')->store('uploads', 'public');
@@ -117,9 +123,9 @@ class ProductsController extends Controller
         $products = Product::with('category')->get();
         return response()->json(['products' => $products]);
     }
-   
 
-   
+
+
 
 
 }

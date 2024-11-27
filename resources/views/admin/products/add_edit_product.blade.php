@@ -11,7 +11,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @endif   
+    @endif
     @if(Session::has('flash_message_success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>{!! session('flash_message_success') !!}</strong>
@@ -19,7 +19,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @endif   
+    @endif
 
     <div class="card">
         <div class="card-header">
@@ -49,10 +49,35 @@
                     <input type="text" name="product_code" id="product_code" class="form-control" value="{{ old('product_code', $product->product_code ?? '') }}" required>
                 </div>
 
+{{--                <div class="form-group">--}}
+{{--                    <label for="product_color">Product Color</label>--}}
+{{--                    <input type="text" name="product_color" id="product_color" class="form-control" value="{{ old('product_color', $product->product_color ?? '') }}" required>--}}
+{{--                </div>--}}
+
                 <div class="form-group">
-                    <label for="product_color">Product Color</label>
-                    <input type="text" name="product_color" id="product_color" class="form-control" value="{{ old('product_color', $product->product_color ?? '') }}" required>
+                    <label for="product_colors">Product Colors Stock (multiple)</label>
+                    <select name="product_color[]" id="product_color" class="form-control" multiple>
+                        @foreach(['red', 'blue', 'green', 'yellow', 'black', 'white', 'orange', 'purple'] as $color)
+                            <option value="{{ $color }}"
+                                {{ (is_array(old('product_colors', $product->product_colors ?? [])) && in_array($color, old('product_colors', $product->product_colors ?? []))) ? 'selected' : '' }}>
+                                {{ ucfirst($color) }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="product_sizes">Product Sizes Stock (multiple)</label>
+                    <select name="product_size[]" id="product_size" class="form-control" multiple>
+                        @foreach(['S', 'M', 'L', 'XL', 'XXL'] as $size)
+                            <option value="{{ $size }}"
+                                {{ (is_array(old('product_sizes', $product->product_sizes ?? [])) && in_array($size, old('product_sizes', $product->product_sizes ?? []))) ? 'selected' : '' }}>
+                                {{ $size }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
 
                 <div class="form-group">
                     <label for="family_color">Family Color</label>
@@ -63,6 +88,13 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+    <label for="in_stock">Stokda var</label>
+    <select name="in_stock" id="in_stock" class="form-control">
+        <option value="1" {{ old('in_stock', $product->in_stock ?? 1) == 1 ? 'selected' : '' }}>Bəli</option>
+        <option value="0" {{ old('in_stock', $product->in_stock ?? 1) == 0 ? 'selected' : '' }}>Xeyr</option>
+    </select>
+</div>
 
                 <div class="form-group">
                     <label for="category_id">Category</label>
@@ -94,6 +126,11 @@
                     <input type="number" name="product_discount" id="discount" class="form-control" step="0.01" value="{{ old('product_discount', $product->product_discount ?? '') }}">
                 </div>
 
+                
+                <div class="form-group">
+                    <label for="discount">Product quantity</label>
+                    <input type="number" name="quantity" id="discount" class="form-control" step="0.01" value="{{ old('quantity', $product->quantity ?? '') }}">
+                </div>
                 <div class="form-group">
                     <label>Free Shipping</label>
                     <div class="form-check">
@@ -111,16 +148,16 @@
                 </div>
 
                 <div class="control-group">
-    
-    <div class="form-group">
-    <label for="product_size">Size</label>
-    <select name="product_size" id="product_size" class="form-control" required>
-        <option value="" disabled>Select a size</option>
-        @foreach(['S', 'M', 'L', 'XL', 'XXL'] as $size)
-            <option value="{{ $size }}" {{ (old('product_size', $product->product_size ?? '') == $size) ? 'selected' : '' }}>{{ $size }}</option>
-        @endforeach
-    </select>
-</div>
+
+{{--    <div class="form-group">--}}
+{{--    <label for="product_size">Size</label>--}}
+{{--    <select name="product_size" id="product_size" class="form-control" required>--}}
+{{--        <option value="" disabled>Select a size</option>--}}
+{{--        @foreach(['S', 'M', 'L', 'XL', 'XXL'] as $size)--}}
+{{--            <option value="{{ $size }}" {{ (old('product_size', $product->product_size ?? '') == $size) ? 'selected' : '' }}>{{ $size }}</option>--}}
+{{--        @endforeach--}}
+{{--    </select>--}}
+{{--</div>--}}
 
 </div>
 
