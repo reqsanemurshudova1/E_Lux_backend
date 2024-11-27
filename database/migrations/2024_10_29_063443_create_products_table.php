@@ -42,7 +42,6 @@ class CreateProductsTable extends Migration
             $table->text('meta_description')->nullable();
             $table->enum('is_feature', ['Yes', 'No'])->default('No');
             $table->tinyInteger('status')->default(1);
-            $table->boolean('in_stock')->default(1); // 1 - Stokda var, 0 - Stokda yoxdur
             $table->integer('quantity')->default(0); // Default olaraq 0
 
 
