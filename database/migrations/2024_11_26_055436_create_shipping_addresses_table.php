@@ -11,14 +11,14 @@ class CreateShippingAddressesTable extends Migration
         Schema::create('shipping_addresses', function (Blueprint $table) {
             $table->id();
             $table->string('country');
-            $table->string('full_name');
+            $table->string('fullName');
             $table->string('email');
-            $table->string('phone_number');
-            $table->string('street_address');
+            $table->string('phoneNumber');
+            $table->string('streetAddress');
             $table->string('city');
             $table->string('state');
-            $table->string('postal_code');
-            $table->decimal('shipping_cost', 8, 2);
+            $table->string('postalCode');
+            $table->decimal('shippingCost', 8, 2);
             $table->timestamps();
         });
     }

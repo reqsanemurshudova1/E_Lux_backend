@@ -17,9 +17,8 @@ class BasketController extends Controller
         $user = auth()->user();
 
         if (!$user) {
-            
+
             return response()->json(['error' => 'Please log in.'], 401);
-           
         }
 
         if (!$user->basket) {
@@ -31,7 +30,7 @@ class BasketController extends Controller
         $basketItems = BasketProduct::where('basket_id', $basketId)->with('product')->get();
 
         $totalPrice = $basketItems->sum(function ($item) {
-          
+
             return $item->product->product_price * $item->stock_count;
         });
 
@@ -39,7 +38,6 @@ class BasketController extends Controller
             'basketItems' => $basketItems,
             'totalPrice' => $totalPrice,
         ]);
-      
     }
 
 
@@ -57,7 +55,6 @@ class BasketController extends Controller
 
         if (!$user) {
             return response()->json(['error' => 'Please log in.'], 401);
-        
         }
 
         if (!$user->basket) {
@@ -66,16 +63,22 @@ class BasketController extends Controller
 
         $basketId = $user->basket->id;
         $product = Product::find($request->product_id);
+        $selectedSize = $request->input('selected_size');
+        $selectedColor = $request->input('selected_color');
 
         if ($product) {
             if ($product->in_stock) {
                 $basket = BasketProduct::where('basket_id', $basketId)
-                    ->where('product_id', $product->id)->first();
+                    ->where('product_id', $product->id)
+                ->first();
+                    
 
                 if ($basket == null) {
                     $basketItem = new BasketProduct();
                     $basketItem->basket_id = $basketId;
                     $basketItem->product_id = $product->id;
+                    $basketItem->selected_size = $selectedSize;
+                    $basketItem->selected_color = $selectedColor;
                     $basketItem->stock_count = 1;
                     $basketItem->save();
                 } else {
@@ -138,11 +141,10 @@ class BasketController extends Controller
             return response()->json(['error' => 'Product not found'], 401);
         }
     }
-
 }
 
 
-// bütün apilar mükəmməl işləyir, bunları düzgün şəkildə inteqrasiya etməyiniz qalır 
+// bütün apilar mükəmməl işləyir, bunları düzgün şəkildə inteqrasiya etməyiniz qalır
 // yenə xatırladıram auth:sanctum middleware olan yerlərə token göndərməsəz error alacaqsızzz
 //const response = await fetch("http://localhost:8000/api/cart", {
 // headers: {
@@ -150,13 +152,13 @@ class BasketController extends Controller
 //   },
 // })
 
-//həmin fetchlərin hamısında bu formada bearer token əlavə etməlisiz 
-//yAXSİ bir sualda verim mende carta elave etmek ucun product detailse girib ordan add to cart edirik  product details yazilib ama sehane ele integrasiya etmeyib onnsuzda men davam ede bilerem?yeni carta elave etmek mentiqini deyirem 
+//həmin fetchlərin hamısında bu formada bearer token əlavə etməlisiz
+//yAXSİ bir sualda verim mende carta elave etmek ucun product detailse girib ordan add to cart edirik  product details yazilib ama sehane ele integrasiya etmeyib onnsuzda men davam ede bilerem?yeni carta elave etmek mentiqini deyirem
 // olar niye de olmasın) biraz beynim yanir bir dq gosterim gosterdiyim yerde hele melumatlar yoxdur ona gore qarisir beynim
 // indi o hissələrə producları datadan çəlkəcəksiz və add to card dedikdə /cart/store routuna istək atacasız bodyde de həmin məhsulun idsini bu qədər//bir dene orada baxa bilerik integrasiya edende problem yaranirdi sehane ede bilmedi mende cox baxa bilmedim
 //  nəyə baxım anlamadı?product details melumatlari integrasiya etmek hissesine datadan cekende sorun yaranir
-// ne sorun? 
+// ne sorun?
 // postman ile yoxlayanda nə gəlir?
-// api düz işləyir inteqrasyada da geri qalan problemləri həll etmək laızmdır 
-//orda çəətin birşey yoxdur sadəcə fetch atıb daha sonra map edıcəksiz bu qədər 
+// api düz işləyir inteqrasyada da geri qalan problemləri həll etmək laızmdır
+//orda çəətin birşey yoxdur sadəcə fetch atıb daha sonra map edıcəksiz bu qədər
 //yaxsi baaxaram men cox baxa bilmedim tam sorun neydi deye cox sagolun digerlerini hell edim hele) tamamdır uğurlar)tesekkurler vaxt ayirdiginiz ucun buyurun

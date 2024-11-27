@@ -16,5 +16,6 @@ class ShippingMethod extends Model
         'min_amount',
         'max_amount',
         'additional_charges',
+        'image',
     ];
 }

@@ -109,8 +109,9 @@ class ProductsController extends Controller
                     $product->image = $filePath;
                 }
             }
+           
             $product->save();
-
+            dd($product);
             $message = $id ? 'Product updated successfully' : 'Product added successfully';
             return redirect()->route('admin.products')->with('flash_message_success', $message);
         }

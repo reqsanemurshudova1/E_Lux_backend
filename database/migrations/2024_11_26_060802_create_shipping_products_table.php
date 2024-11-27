@@ -11,7 +11,7 @@ class CreateShippingProductsTable extends Migration
             $table->id();
             $table->foreignId('shipping_address_id')->constrained('shipping_addresses')->onDelete('cascade');
             $table->integer('product_id');
-            $table->string('name');
+            $table->string('fullName');
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->timestamps();
