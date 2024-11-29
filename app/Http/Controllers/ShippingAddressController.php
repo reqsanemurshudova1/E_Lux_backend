@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ShippingAddressController extends Controller
 {
+
     public function store(Request $request)
     {
       

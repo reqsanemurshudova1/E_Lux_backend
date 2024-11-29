@@ -16,6 +16,7 @@
                 <th>Min Amount</th>
                 <th>Max Amount</th>
                 <th>Additional Charges</th>
+                <th>Image</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -30,6 +31,10 @@
                 <td>${{ $method->min_amount }}</td>
                 <td>${{ $method->max_amount }}</td>
                 <td>${{ $method->additional_charges }}</td>
+                @if ($method->image)
+    <img src="{{ asset('storage/' . $method->image) }}" alt="{{ $method->name }}" width="100">
+@endif
+
                 <td>
                     <a href="{{ route('admin.shipping.edit', $method->id) }}" class="btn btn-sm btn-warning">Edit</a>
                     <form action="{{ route('admin.shipping.destroy', $method->id) }}" method="POST" style="display:inline;">
