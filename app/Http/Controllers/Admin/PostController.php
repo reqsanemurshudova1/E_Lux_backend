@@ -109,4 +109,15 @@ class PostController extends Controller
         $posts = Post::all();
         return response()->json(['posts' => $posts]);
     }
+    public function show($id)
+    {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+
+        return response()->json($post);
+    }
+
 }

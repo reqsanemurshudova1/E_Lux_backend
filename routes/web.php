@@ -60,7 +60,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/', [ProductsController::class, 'products'])->name('admin.products');
             Route::get('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product');
             Route::post('add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'])->name('admin.products.add_edit_product.post');
-            Route::post('delete-product/{id}', [ProductsController::class, 'delete_product'])->name('admin.delete_product');
+            Route::delete('delete-product/{id}', [ProductsController::class, 'delete_product'])->name('admin.delete_product');
 
         });
 

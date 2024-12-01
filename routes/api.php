@@ -31,6 +31,8 @@ Route::middleware('api')->group(function () {
     Route::get('/products', [ProductsController::class, 'getProducts']);
     Route::get('/product-details/{id}', [ProductsDescriptionController::class, 'show']);
     Route::get('/posts', [PostController::class, 'getPosts']);
+    Route::get('/posts/{id}', [PostController::class, 'show']);
+
 
     Route::post('/product-reviews', [ProductReviewController::class, 'store']);
     Route::put('/product-reviews/{id}', [ProductReviewController::class, 'update']);
