@@ -88,7 +88,7 @@ class BasketController extends Controller
                     $basketItem->stock_count = 1;
                     $basketItem->save();
                 } else {
-                    // Increment the quantity if the product with the same size and color is already in the basket
+                    
                     if ($basket->stock_count + 1 > $product->quantity) {
                         return response()->json(['error' => 'Product is out of stock'], 400);
                     }
