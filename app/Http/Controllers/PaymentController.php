@@ -9,13 +9,14 @@ class PaymentController extends Controller
     public function processPayment(Request $request)
     {
         
+        
         $validatedData = $request->validate([
             'paymentMethodId' => 'required|exists:payment_methods,id',
-            'cardDetails.cardholderName' => 'required_if:paymentMethodId,1|string|max:255', // Credit Card Only
-            'cardDetails.cardNumber' => 'required_if:paymentMethodId,1|string|max:16',
-            'cardDetails.expirationDate' => 'required_if:paymentMethodId,1|string|max:5',
-            'cardDetails.cvc' => 'required_if:paymentMethodId,1|string|max:4',
-            'cardDetails.postalCode' => 'required_if:paymentMethodId,1|string|max:10',
+            'card_details.cardholderName' => 'required_if:paymentMethodId,1|string|max:255', // Credit Card Only
+            'card_details.cardNumber' => 'required_if:paymentMethodId,1|string|max:16',
+            'card_details.expirationDate' => 'required_if:paymentMethodId,1|string|max:5',
+            'card_details.cvc' => 'required_if:paymentMethodId,1|string|max:4',
+            'card_details.postalCode' => 'required_if:paymentMethodId,1|string|max:10',
             'totalAmount' => 'required|numeric|min:0',
             'products' => 'required|array',
             'products.*.id' => 'required|integer',
@@ -35,7 +36,7 @@ class PaymentController extends Controller
           
                 break;
             case 'Credit Card':
-                $cardDetails = $validatedData['cardDetails'];
+                $card_details = $validatedData['card_details'];
               
                 break;
             default:
@@ -46,7 +47,7 @@ class PaymentController extends Controller
         $paymentInfo = [
             'payment_method' => $paymentMethod->name,
             'total_amount' => $validatedData['totalAmount'],
-            'card_details' => $paymentMethod->name === 'Credit Card' ? json_encode($validatedData['cardDetails']) : null,
+            'card_details' => $paymentMethod->name === 'Credit Card' ? json_encode($validatedData['card_details']) : null,
             'products' => json_encode($validatedData['products']),
         ];
 
@@ -59,5 +60,10 @@ class PaymentController extends Controller
             'status' => 'success',
             'message' => 'Payment processed successfully!',
         ], 200);
+    }
+    public function getPaymentMethods()
+    {
+        $methods = PaymentMethods::all();
+        return response()->json(['data' => $methods]);
     }
 }

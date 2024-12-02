@@ -85,9 +85,16 @@
                                 <a href="{{ route('admin.products.add_edit_product', ['id' => $product['id']]) }}" class="btn btn-primary btn-sm" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button type="button" class="btn btn-danger btn-sm delete-button" data-id="{{ $product['id'] }}" data-toggle="modal" data-target="#deleteModal">
+                                <form action="{{ route('admin.delete_product', ['id' => $product['id']]) }}" method="POST" style="display: inline;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-primary btn-sm" title="delete">
+        <i class="fas fa-trash"></i>
+    </button>
+</form>
+                                <!-- <button type="button" class="btn btn-danger btn-sm delete-button" data-id="{{ $product['id'] }}" data-toggle="modal" data-target="#deleteModal">
                                     <i class="fas fa-trash"></i>
-                                </button>
+                                </button> -->
                             </td>
                         </tr>
 

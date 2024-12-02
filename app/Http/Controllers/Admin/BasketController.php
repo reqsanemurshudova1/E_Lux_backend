@@ -17,9 +17,8 @@ class BasketController extends Controller
         $user = auth()->user();
 
         if (!$user) {
-            
+
             return response()->json(['error' => 'Please log in.'], 401);
-           
         }
 
         if (!$user->basket) {
@@ -31,7 +30,7 @@ class BasketController extends Controller
         $basketItems = BasketProduct::where('basket_id', $basketId)->with('product')->get();
 
         $totalPrice = $basketItems->sum(function ($item) {
-          
+
             return $item->product->product_price * $item->stock_count;
         });
 
@@ -39,7 +38,6 @@ class BasketController extends Controller
             'basketItems' => $basketItems,
             'totalPrice' => $totalPrice,
         ]);
-      
     }
 
 
@@ -48,7 +46,9 @@ class BasketController extends Controller
         $user = auth()->user();
 
         $validator = Validator::make($request->all(), [
-            'product_id' => 'required|exists:products,id'
+            'product_id' => 'required|exists:products,id',
+            'selected_size' => 'required',
+            'selected_color' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -57,28 +57,38 @@ class BasketController extends Controller
 
         if (!$user) {
             return response()->json(['error' => 'Please log in.'], 401);
-        
         }
 
+        // Create a basket for the user if it doesn't exist
         if (!$user->basket) {
             $user->basket()->create();
         }
 
         $basketId = $user->basket->id;
         $product = Product::find($request->product_id);
+        $selectedSize = $request->input('selected_size');
+        $selectedColor = $request->input('selected_color');
 
         if ($product) {
             if ($product->in_stock) {
+                // Check if the product with the same size and color already exists in the basket
                 $basket = BasketProduct::where('basket_id', $basketId)
-                    ->where('product_id', $product->id)->first();
+                    ->where('product_id', $product->id)
+                    ->where('selected_size', $selectedSize)
+                    ->where('selected_color', $selectedColor)
+                    ->first();
 
                 if ($basket == null) {
+                    // Add new product to the basket
                     $basketItem = new BasketProduct();
                     $basketItem->basket_id = $basketId;
                     $basketItem->product_id = $product->id;
+                    $basketItem->selected_size = $selectedSize;
+                    $basketItem->selected_color = $selectedColor;
                     $basketItem->stock_count = 1;
                     $basketItem->save();
                 } else {
+                    // Increment the quantity if the product with the same size and color is already in the basket
                     if ($basket->stock_count + 1 > $product->quantity) {
                         return response()->json(['error' => 'Product is out of stock'], 400);
                     }
@@ -95,6 +105,7 @@ class BasketController extends Controller
             return response()->json(['error' => 'Product not found'], 404);
         }
     }
+
 
     public function remove(Request $request)
     {
@@ -138,25 +149,4 @@ class BasketController extends Controller
             return response()->json(['error' => 'Product not found'], 401);
         }
     }
-
 }
-
-
-// bütün apilar mükəmməl işləyir, bunları düzgün şəkildə inteqrasiya etməyiniz qalır 
-// yenə xatırladıram auth:sanctum middleware olan yerlərə token göndərməsəz error alacaqsızzz
-//const response = await fetch("http://localhost:8000/api/cart", {
-// headers: {
-//     Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-//   },
-// })
-
-//həmin fetchlərin hamısında bu formada bearer token əlavə etməlisiz 
-//yAXSİ bir sualda verim mende carta elave etmek ucun product detailse girib ordan add to cart edirik  product details yazilib ama sehane ele integrasiya etmeyib onnsuzda men davam ede bilerem?yeni carta elave etmek mentiqini deyirem 
-// olar niye de olmasın) biraz beynim yanir bir dq gosterim gosterdiyim yerde hele melumatlar yoxdur ona gore qarisir beynim
-// indi o hissələrə producları datadan çəlkəcəksiz və add to card dedikdə /cart/store routuna istək atacasız bodyde de həmin məhsulun idsini bu qədər//bir dene orada baxa bilerik integrasiya edende problem yaranirdi sehane ede bilmedi mende cox baxa bilmedim
-//  nəyə baxım anlamadı?product details melumatlari integrasiya etmek hissesine datadan cekende sorun yaranir
-// ne sorun? 
-// postman ile yoxlayanda nə gəlir?
-// api düz işləyir inteqrasyada da geri qalan problemləri həll etmək laızmdır 
-//orda çəətin birşey yoxdur sadəcə fetch atıb daha sonra map edıcəksiz bu qədər 
-//yaxsi baaxaram men cox baxa bilmedim tam sorun neydi deye cox sagolun digerlerini hell edim hele) tamamdır uğurlar)tesekkurler vaxt ayirdiginiz ucun buyurun
