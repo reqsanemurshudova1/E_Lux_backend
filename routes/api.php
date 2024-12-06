@@ -33,7 +33,9 @@ Route::middleware('api')->group(function () {
     Route::get('/posts', [PostController::class, 'getPosts']);
     Route::get('/posts/{id}', [PostController::class, 'show']);
 
-
+    Route::get('product/category/{categoryId}', [ProductsController::class, 'getProductsByCategory'])->name('admin.products.by_category');
+    Route::post('/filter-products', [ProductsController::class, 'filterProducts']);
+    Route::get('product/search', [ProductsController::class, 'searchProducts'])->name('admin.products.search');
     Route::post('/product-reviews', [ProductReviewController::class, 'store']);
     Route::put('/product-reviews/{id}', [ProductReviewController::class, 'update']);
     Route::delete('/product-reviews/{id}', [ProductReviewController::class, 'destroy']);
@@ -42,13 +44,13 @@ Route::middleware('api')->group(function () {
 
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    
+
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
         Route::post('/logout', [AuthController::class, 'logout']);
     });
     //cart
-   
+
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/cart', [BasketController::class, 'index']);
         Route::post('/cart/store', [BasketController::class, 'store']);
@@ -56,9 +58,9 @@ Route::middleware('api')->group(function () {
     });
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/orders', [OrderController::class, 'index']);
-        Route::post('/orders', [OrderController::class, 'store']); 
+        Route::post('/orders', [OrderController::class, 'store']);
     });
     Route::post('/shipping-address', [ShippingAddressController::class, 'store']);
     Route::post('/process-payment', [PaymentController::class, 'processPayment']);
-    
+
 });
