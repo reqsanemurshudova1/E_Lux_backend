@@ -77,7 +77,7 @@ class OrderController extends Controller
             'user_id' => $user->id,
             'basket_id' => $user->basket->id,
             'address' => $req->address,
-            'payment_type' => $req->payment_type,
+            'payment_type' => $req->payment,
             'uid' => uniqid(),
             'total' => 0,
         ]);
@@ -89,17 +89,18 @@ class OrderController extends Controller
                 continue;
             }
 
-            $subtotal = $product->price * $basketProduct->qty;
+            $subtotal = $product->product_price * $basketProduct->stock_count;
 
             OrderDetail::create([
                 'order_id' => $newOrder->id,
-                'product_name' => $product->name,
-                'size' => $basketProduct->size,
+                'product_name' => $product->product_name,
+                'size' => $basketProduct->selected_size,  // Make sure this is the correct field
                 'date' => now(),
-                'price' => $product->price,
-                'quantity' => $basketProduct->qty,
+                'price' => $product->product_price,
+                'quantity' => $basketProduct->stock_count, // Assuming stock_count represents quantity in the basket
                 'total' => $subtotal,
             ]);
+            
 
             $total += $subtotal;
         }
