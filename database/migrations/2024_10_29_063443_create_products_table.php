@@ -35,6 +35,7 @@ class CreateProductsTable extends Migration
             $table->string('pattern')->nullable();
             $table->string('sleeve')->nullable();
             $table->string('origin')->nullable();
+            $table->string('quantity')->nullable();
 
             $table->string('fit')->nullable();
             $table->string('meta_title')->nullable();
