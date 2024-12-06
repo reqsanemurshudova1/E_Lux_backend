@@ -76,8 +76,8 @@ class OrderController extends Controller
         $newOrder = Order::create([
             'user_id' => $user->id,
             'basket_id' => $user->basket->id,
-            'address' => $req->address,
-            'payment_type' => $req->payment,
+            'address' => $req->shipping_addresses,
+            'payment_type' => $req->payments,
             'uid' => uniqid(),
             'total' => 0,
         ]);

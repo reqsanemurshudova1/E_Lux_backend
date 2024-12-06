@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,18 +16,31 @@ class Order extends Model
         'status',
         'address',
         'payment_type',
+        'shipping_adress_id', // Make sure this is consistent with the migration
         'total',
     ];
-    
-  
+
     public function details()
     {
         return $this->hasMany(OrderDetail::class);
     }
 
-  
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function shippingMethod()
+    {
+        return $this->belongsTo(ShippingAddress::class, 'shipping_adress_id'); // Ensure the column name matches
     }
 }
