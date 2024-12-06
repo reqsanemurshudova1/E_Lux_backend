@@ -118,14 +118,74 @@ class ProductsController extends Controller
         $categories = Category::all();
         return view('admin.products.add_edit_product', compact('title', 'categories', 'id'));
     }
+
+    //For Api
+
     public function getProducts()
     {
-        $products = Product::with('category')->get();
+        $products = Product::all();
         return response()->json(['products' => $products]);
     }
 
+    public function getProductsByCategory($categoryId)
+    {
+        $products = Product::where('category_id', $categoryId)->get();
+
+        if ($products->isEmpty()) {
+            return response()->json(['message' => 'No products found for this category.'], 404);
+        }
+
+        return response()->json(['products' => $products], 200);
+    }
+
+    public function searchProducts(Request $request)
+    {
+        $query = $request->input('query');
+
+        if (!$query) {
+            return response()->json(['message' => 'Search query is required.'], 400);
+        }
+        $products = Product::where('product_name', 'LIKE', "%{$query}%")->get();
+
+        if ($products->isEmpty()) {
+            return response()->json(['message' => 'No products found matching your search.'], 404);
+        }
+
+        return response()->json(['products' => $products], 200);
+    }
 
 
+    public function filterProducts(Request $request)
+    {
+        $priceRange = $request->input('price');
+        $colors = $request->input('color');
+        $fit = $request->input('fit');
 
+        $query = Product::query();
+
+        if (!empty($priceRange) && count($priceRange) == 2) {
+            $query->whereBetween('product_price', [$priceRange[0], $priceRange[1]]);
+        }
+
+        if (!empty($colors)) {
+            $query->where(function($q) use ($colors) {
+                foreach ($colors as $color) {
+                    $q->orWhereJsonContains('product_color', $color);
+                }
+            });
+        }
+
+        if (!empty($fit)) {
+            $query->where('brand_id', $fit);
+        }
+
+        $products = $query->get();
+
+        if ($products->isEmpty()) {
+            return response()->json(['message' => 'No products found matching the filters.'], 201);
+        }
+
+        return response()->json(['products' => $products], 200);
+    }
 
 }
