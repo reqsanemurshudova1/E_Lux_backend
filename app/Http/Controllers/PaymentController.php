@@ -11,6 +11,7 @@ class PaymentController extends Controller
         
         
         $validatedData = $request->validate([
+            // 'orderId' => 'required|exists:orders,id',
             'paymentMethodId' => 'required|exists:payment_methods,id',
             'card_details.cardholderName' => 'required_if:paymentMethodId,1|string|max:255', // Credit Card Only
             'card_details.cardNumber' => 'required_if:paymentMethodId,1|string|max:16',
@@ -45,6 +46,7 @@ class PaymentController extends Controller
 
      
         $paymentInfo = [
+            // 'order_id' => $validatedData['orderId'],
             'payment_method' => $paymentMethod->name,
             'total_amount' => $validatedData['totalAmount'],
             'card_details' => $paymentMethod->name === 'Credit Card' ? json_encode($validatedData['card_details']) : null,
